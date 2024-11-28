@@ -1,0 +1,62 @@
+::root{ 
+    --accent: #5291e2;
+    --dark:   #383C4A;
+    --light:  #7C818C;
+    --ld:     #404552;
+    --dl:     #4B5162;
+    --white:  white;
+}
+
+*{
+  font-family: Victor Bold Mono;
+  font-size: 1.04em;
+}
+
+window{
+  background-color: transparent;
+}
+
+#input {
+  margin: 5px;
+  border-radius: 0px;
+  border: none;
+  border-bottom: 3px solid grey;
+  background-color: transparent;
+  color: rgba(150,120,120);
+  font-size: 2em;
+}
+
+#inner-box {
+  background-color: transparent;
+  padding: 10px 10px;
+}
+
+#outer-box {
+  padding: 10px 10px;
+  background-color: rgba(245,245,255,1);
+  border-radius: 10px;
+}
+
+#text {
+  padding: 5px;
+}
+
+#entry {
+  color: rgba(150,120,120);
+  border-bottom: 1px dashed lightgrey;
+}
+
+#entry:selected {
+  background-color: rgba(225,225,235,1);
+}
+
+#text:selected {
+  color: black;
+}
+
+#scroll {
+}
+
+#img {
+}
+

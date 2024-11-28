@@ -1,0 +1,13 @@
+# BEGIN_KITTY_THEME
+# Catppuccin-Latte
+include current-theme.conf
+# END_KITTY_THEME
+
+
+# BEGIN_KITTY_FONTS
+font_family      family="Terminess Nerd Font Mono"
+bold_font        auto
+italic_font      family="Victor Italic Mono"
+bold_italic_font family="Victor Italic Bold Mono"
+font_size 16.0
+# END_KITTY_FONTS
