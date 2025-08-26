@@ -1,48 +1,131 @@
 return {
   {
     "nvim-lualine/lualine.nvim",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
-    config = function()
-      require("lualine").setup({
+    event = "VeryLazy",
+    init = function()
+      vim.g.lualine_laststatus = vim.o.laststatus
+      if vim.fn.argc(-1) > 0 then
+        -- set an empty statusline till lualine loads
+        vim.o.statusline = " "
+      else
+        -- hide the statusline on the starter page
+        vim.o.laststatus = 0
+      end
+    end,
+    opts = function()
+      -- PERF: we don't need this lualine require madness 🤷
+      local lualine_require = require("lualine_require")
+      lualine_require.require = require
+
+      local icons = LazyVim.config.icons
+
+      vim.o.laststatus = vim.g.lualine_laststatus
+
+      local opts = {
         options = {
-          theme = "dracula", -- lualine theme
-          component_separators = { left = "", right = "" },
-          section_separators = { left = "", right = "" },
-          disabled_filetypes = { -- Filetypes to disable lualine for.
-            statusline = {}, -- only ignores the ft for statusline.
-            winbar = {}, -- only ignores the ft for winbar.
-          },
-
-          ignore_focus = {}, -- If current filetype is in this list it'll
-          -- always be drawn as inactive statusline
-          -- and the last window will be drawn as active statusline.
-          -- for example if you don't want statusline of
-          -- your file tree / sidebar window to have active
-          -- statusline you can add their filetypes here.
-
-          always_divide_middle = true, -- When set to true, left sections i.e. 'a','b' and 'c'
-          -- can't take over the entire statusline even
-          -- if neither of 'x', 'y' or 'z' are present.
-
-          always_show_tabline = true, -- When set to true, if you have configured lualine for displaying tabline
-          -- then tabline will always show. If set to false, then tabline will be displayed
-          -- only when there are more than 1 tab. (see :h showtabline)
-
-          globalstatus = false, -- enable global statusline (have a single statusline
-          -- at bottom of neovim instead of one for  every window).
-          -- This feature is only available in neovim 0.7 and higher.
-
-          refresh = { -- sets how often lualine should refresh it's contents (in ms)
-            statusline = 100, -- The refresh option sets minimum time that lualine tries
-            tabline = 100, -- to maintain between refresh. It's not guarantied if situation
-            winbar = 100, -- arises that lualine needs to refresh itself before this time
-            -- it'll do it.
-
-            -- Also you can force lualine's refresh by calling refresh function
-            -- like require('lualine').refresh()
+          theme = "auto",
+          globalstatus = vim.o.laststatus == 3,
+          disabled_filetypes = {
+            statusline = { "dashboard", "alpha", "ministarter", "snacks_dashboard" },
           },
         },
-      })
+        sections = {
+          lualine_a = { "mode" },
+          lualine_b = { "branch" },
+
+          lualine_c = {
+            LazyVim.lualine.root_dir(),
+            {
+              "diagnostics",
+              symbols = {
+                error = icons.diagnostics.Error,
+                warn = icons.diagnostics.Warn,
+                info = icons.diagnostics.Info,
+                hint = icons.diagnostics.Hint,
+              },
+            },
+            { "filetype", icon_only = true, separator = "", padding = { left = 1, right = 0 } },
+            { LazyVim.lualine.pretty_path() },
+          },
+          lualine_x = {
+            Snacks.profiler.status(),
+          -- stylua: ignore
+          {
+            function() return require("noice").api.status.command.get() end,
+            cond = function() return package.loaded["noice"] and require("noice").api.status.command.has() end,
+            color = function() return { fg = Snacks.util.color("Statement") } end,
+          },
+          -- stylua: ignore
+          {
+            function() return require("noice").api.status.mode.get() end,
+            cond = function() return package.loaded["noice"] and require("noice").api.status.mode.has() end,
+            color = function() return { fg = Snacks.util.color("Constant") } end,
+          },
+          -- stylua: ignore
+          {
+            function() return "  " .. require("dap").status() end,
+            cond = function() return package.loaded["dap"] and require("dap").status() ~= "" end,
+            color = function() return { fg = Snacks.util.color("Debug") } end,
+          },
+          -- stylua: ignore
+          {
+            require("lazy.status").updates,
+            cond = require("lazy.status").has_updates,
+            color = function() return { fg = Snacks.util.color("Special") } end,
+          },
+            {
+              "diff",
+              symbols = {
+                added = icons.git.added,
+                modified = icons.git.modified,
+                removed = icons.git.removed,
+              },
+              source = function()
+                local gitsigns = vim.b.gitsigns_status_dict
+                if gitsigns then
+                  return {
+                    added = gitsigns.added,
+                    modified = gitsigns.changed,
+                    removed = gitsigns.removed,
+                  }
+                end
+              end,
+            },
+          },
+          lualine_y = {
+            { "progress", separator = " ", padding = { left = 1, right = 0 } },
+            { "location", padding = { left = 0, right = 1 } },
+          },
+          lualine_z = {
+            function()
+              return " " .. os.date("%R")
+            end,
+          },
+        },
+        extensions = { "neo-tree", "lazy", "fzf" },
+      }
+
+      -- do not add trouble symbols if aerial is enabled
+      -- And allow it to be overriden for some buffer types (see autocmds)
+      if vim.g.trouble_lualine and LazyVim.has("trouble.nvim") then
+        local trouble = require("trouble")
+        local symbols = trouble.statusline({
+          mode = "symbols",
+          groups = {},
+          title = false,
+          filter = { range = true },
+          format = "{kind_icon}{symbol.name:Normal}",
+          hl_group = "lualine_c_normal",
+        })
+        table.insert(opts.sections.lualine_c, {
+          symbols and symbols.get,
+          cond = function()
+            return vim.b.trouble_lualine ~= false and symbols.has()
+          end,
+        })
+      end
+
+      return opts
     end,
   },
 }
