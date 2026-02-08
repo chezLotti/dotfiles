@@ -1,6 +1,7 @@
 * {
     /* `otf-font-awesome` is required to be installed for icons */
-    font-family: FontAwesome, Roboto, Helvetica, Arial, sans-serif;
+    /*font-family: FontAwesome, Roboto, Helvetica, Arial, sans-serif;*/
+    font-family: Victor-Mono;
     font-size: 18px;
     color: #ccbbff;
 }
@@ -119,8 +120,7 @@ button:hover {
 }
 
 #custom-clock {
-  color: rgba(220,150, 150,1);
-  border-bottom: 3px solid rgba(220,150,150,1);
+
 }
 
 #battery {
