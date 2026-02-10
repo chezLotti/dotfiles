@@ -16,10 +16,12 @@
     "modules-right": [
         //"network",
         //"keyboard-state",
+        "pulseaudio",
         "cpu",
         "memory",
-        "temperature"
+        "temperature",
         //"battery"
+        "custom/power"
     ],
     // Modules configuration
     "hyprland/workspaces": {
@@ -143,7 +145,7 @@
     },
     "pulseaudio": {
         // "scroll-step": 1, // %, can be a float
-        "format": "{volume}% {icon} {format_source}",
+        "format": "{volume}% {icon}   {format_source}",
         "format-bluetooth": "{volume}% {icon} {format_source}",
         "format-bluetooth-muted": " {icon} {format_source}",
         "format-muted": " {format_source}",
@@ -177,7 +179,7 @@
         // "exec": "$HOME/.config/waybar/mediaplayer.py --player spotify 2> /dev/null" // Filter player based on name
     },
     "custom/power": {
-        "format" : "⏻ ",
+        "format" : "\uF530",
 		"tooltip": false,
 		"menu": "on-click",
 		"menu-file": "$HOME/.config/waybar/power_menu.xml", // Menu file in resources folder
