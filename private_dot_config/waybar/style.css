@@ -1,14 +1,14 @@
 * {
     /* `otf-font-awesome` is required to be installed for icons */
     /*font-family: FontAwesome, Roboto, Helvetica, Arial, sans-serif;*/
-    font-family: Victor-Mono;
-    font-size: 18px;
-    color: #ccbbff;
+    font-family: OldLondon;
+    font-size: 20px;
+    /*color: #eeccff;*/
+    color: #ddbbbb;
 }
 
 window#waybar {
-    background-color: rgba(200, 180, 240, 0.2);
-    background: linear-gradient(to top, rgba(200, 180, 240, 0.7), transparent);
+    background: linear-gradient(to top, transparent, black);
     padding: 2px 2px;
     border: none;
     border-radius: 8px;
@@ -77,6 +77,10 @@ button:hover {
     background-color: #eb4d4b;
 }
 
+#workspaces button.default {
+
+}
+
 #mode {
     background-color: #64727D;
     box-shadow: inset 0 -3px #ffffff;
@@ -117,6 +121,28 @@ button:hover {
 /* If workspaces is the rightmost module, omit right margin */
 .modules-right > widget:last-child > #workspaces {
     margin-right: 0;
+}
+
+.modules-left {
+	background: rgba(70, 10, 10,0.8);
+	border-bottom: 2px solid #ddbbbb;
+	border-right: 2px solid #ddbbbb;
+	border-radius: 0 0 10px 0;
+}
+
+.modules-center {
+	background: rgba(70, 10, 10,0.8);
+  border-bottom: 2px solid #ddbbbb;
+  border-right: 2px solid #ddbbbb;
+  border-left: 2px solid #ddbbbb;
+  border-radius: 0 0 10px 10px;
+}
+
+.modules-right {
+	background: rgba(70, 10, 10,0.8);
+  border-bottom: 2px solid #ddbbbb;
+  border-left: 2px solid #ddbbbb;
+  border-radius: 0 0 0 10px;
 }
 
 #custom-clock {
@@ -168,15 +194,9 @@ label:focus {
 }
 
 #cpu {
-  color: rgba(120,120,230,1);
-  border-bottom: 3px solid rgba(120,120,230,1);
-  /*color: rgba(200,150,150,1);
-  border-bottom: 3px solid rgba(200,150,150,1);
-*/}
+}
 
 #memory {
-  color: rgba(150,200,150,1);
-  border-bottom: 3px solid rgba(150,200,150,1);
 }
 
 #disk {
@@ -187,8 +207,6 @@ label:focus {
 }
 
 #network {
-  color: rgba(150,150,210,1);
-  border-bottom: 3px solid rgba(150,150,210,1);
 }
 
 #network.disconnected {
@@ -225,8 +243,6 @@ label:focus {
 }
 
 #temperature {
-  color: rgba(240,240, 120,1);
-  border-bottom: 3px solid rgba(240,240,120,1);
 }
 
 #temperature.critical {
@@ -264,10 +280,6 @@ label:focus {
 }
 
 #keyboard-state {
-    background: #97e1ad;
-    padding: 0 0px;
-    margin: 0 5px;
-    min-width: 16px;
 }
 
 #keyboard-state > label {

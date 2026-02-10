@@ -10,15 +10,16 @@
         "hyprland/workspaces"
     ],
     "modules-center": [
-        "hyprland/window",
+        //"hyprland/window",
         "custom/clock"
     ],
     "modules-right": [
-        "network",
+        //"network",
+        //"keyboard-state",
         "cpu",
         "memory",
-        "temperature",
-        "battery"
+        "temperature"
+        //"battery"
     ],
     // Modules configuration
     "hyprland/workspaces": {
@@ -27,10 +28,10 @@
         "warp-on-scroll": false,
         "format": "{name}: {icon}",
         "format-icons": {
-            "urgent": "",
-            "active": "",
-            "default": "",
-            "empty": "\uF4AA"
+            "urgent": "\uEF0E",
+            "active": "\uDB83\uDCF5",
+            "default": "\uDB82\uDD53",
+            "empty": "\uDB82\uDFA2"
         },
         "persistent-workspaces": {
             "*": 5 // 5 workspaces by default on every monitor
@@ -90,12 +91,11 @@
         "format": "{}% "
     },
     "temperature": {
-        // "thermal-zone": 2,
-        // "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
+        //"thermal-zone": 2,
+        "hwmon-path": "/sys/class/hwmon/hwmon1/temp1_input",
         "critical-threshold": 80,
-        // "format-critical": "{temperatureC}°C {icon}",
         "format": "{temperatureC}°C {icon}",
-        "format-icons": ["", "", ""]
+        "format-icons": [""]
     },
     "backlight": {
         // "device": "acpi_video1",

@@ -1,0 +1,5 @@
+[default]
+duration = "5m"
+mode = "center"
+[HDMI-A-1]
+path = "/home/charlotte/.config/backgrounds/goth-ish/"
